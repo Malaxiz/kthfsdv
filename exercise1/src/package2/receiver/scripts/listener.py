@@ -3,22 +3,18 @@
 import rospy
 from std_msgs.msg import String
 
-def callback(data):
-    q = 0.15
-    rospy.loginfo('%s', int(data.data) / q)
-
 def listener():
+    pub = rospy.Publisher('kthfs/result', String, queue_size=10)
 
-    # In ROS, nodes are uniquely named. If two nodes with the same
-    # name are launched, the previous one is kicked off. The
-    # anonymous=True flag means that rospy will choose a unique
-    # name for our 'listener' node so that multiple listeners can
-    # run simultaneously.
+    def callback(data):
+        q = 0.15
+        msg = '%f' % (int(data.data) / q)
+        rospy.loginfo(msg)
+        pub.publish(msg)
+
     rospy.init_node('nodeB', anonymous=True)
-
     rospy.Subscriber('didrik', String, callback)
-
-    # spin() simply keeps python from exiting until this node is stopped
+    
     rospy.spin()
 
 if __name__ == '__main__':
