@@ -26,4 +26,4 @@
 `python3 -m venv kthfsdv`  
 `source ./kthfsdv/bin/activate`  
 `pip install -r requirements.txt`  
-`python app.py`  
+`./app.py`  
